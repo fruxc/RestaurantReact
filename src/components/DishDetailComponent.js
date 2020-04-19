@@ -21,7 +21,7 @@ import { Link } from "react-router-dom";
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !val || val.length <= len;
 const minLength = (len) => (val) => val && val.length >= len;
-class CommentRating extends Component {
+class CommentForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -76,11 +76,11 @@ class CommentRating extends Component {
                             required: "Required ",
                           }}
                         />
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
                       </Control.select>
                     </Col>
                   </Row>
@@ -91,9 +91,9 @@ class CommentRating extends Component {
                     <Col md={12}>
                       <Control.text
                         className="form-control"
-                        model=".yourname"
-                        id="yourname"
-                        name="yourname"
+                        model=".author"
+                        id="author"
+                        name="author"
                         placeholder="Your Name"
                         validators={{
                           required,
@@ -103,7 +103,7 @@ class CommentRating extends Component {
                       />
                       <Errors
                         className="text-danger"
-                        model=".yourname"
+                        model=".author"
                         show="touched"
                         messages={{
                           required: "Required ",
@@ -194,7 +194,7 @@ function RenderComments({ comments }) {
       <div>
         <h4>Comments</h4>
         <ul className="list-unstyled">{allComments}</ul>
-        <CommentRating />
+        <CommentForm />
       </div>
     );
   } else {
