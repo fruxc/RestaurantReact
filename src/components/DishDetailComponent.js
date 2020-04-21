@@ -18,6 +18,7 @@ import {
 import { Control, LocalForm, Errors } from "react-redux-form";
 import { Link } from "react-router-dom";
 import { Loading } from "./LoadingComponent";
+import { baseUrl } from "../shared/baseUrl";
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !val || val.length <= len;
@@ -166,7 +167,7 @@ function RenderDish({ dish }) {
   if (dish != null) {
     return (
       <Card>
-        <CardImg width="100%" src={dish.image} alt={dish.name} />
+        <CardImg width="100%" src={baseUrl + dish.image} axlt={dish.name} />
         <CardBody>
           <CardTitle>{dish.name}</CardTitle>
           <CardText>{dish.description}</CardText>
@@ -178,8 +179,10 @@ function RenderDish({ dish }) {
   }
 }
 
-function RenderComments({ comments, addComment, dishId }) {
-  if (comments != null) {
+function RenderComments({ comments, addComment, dishId, errMess }) {
+  if (errMess) {
+    return <h4>{errMess}</h4>;
+  } else if (comments != null) {
     const allComments = comments.map((cmt) => {
       return (
         <li key={cmt.id}>
@@ -248,6 +251,7 @@ const DishDetail = (props) => {
           </div>
           <div className="col-12 col-md-5 m-1">
             <RenderComments
+              errMess={props.commentsErrMess}
               comments={props.comments}
               addComment={props.addComment}
               dishId={props.dish.id}
