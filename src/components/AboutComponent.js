@@ -8,23 +8,18 @@ import {
   Media,
 } from "reactstrap";
 import { Link } from "react-router-dom";
+import { baseUrl } from "../shared/baseUrl";
+import { Loading } from "./LoadingComponent";
+import { Fade, Stagger } from "react-animation-components";
 
-function About(props) {
-  const leaders = props.leaders.map((leader) => {
-    return (
-      <div key={leader.id} className="col-12 mt-5">
-        <RenderLeader leader={leader} />
-      </div>
-    );
-  });
-
-  function RenderLeader({ leader }) {
-    return (
+function RenderLeader({ leader }) {
+  return (
+    <Fade in>
       <Media tag="li">
         <Media left middle>
           <Media
             object
-            src={leader.image}
+            src={baseUrl + leader.image}
             height="200"
             width="200"
             alt={leader.name}
@@ -36,8 +31,39 @@ function About(props) {
           <p>{leader.description}</p>
         </Media>
       </Media>
-    );
-  }
+    </Fade>
+  );
+}
+
+function About(props) {
+  const leaders = props.leaders.leaders.map((leader) => {
+    if (props.leaders.isLoading) {
+      return (
+        <div className="container">
+          <div className="row">
+            <Loading />
+          </div>
+        </div>
+      );
+    } else if (props.leaders.errMess) {
+      return (
+        <div className="container">
+          <div className="row">
+            <h4>{props.leaders.errMess}</h4>
+          </div>
+        </div>
+      );
+    } else {
+      return (
+        <div key={leader.id} className="col-12 mt-5">
+          <Stagger in>
+            <RenderLeader leader={leader} />
+          </Stagger>
+        </div>
+      );
+    }
+  });
+
   return (
     <div className="container">
       <div className="row">
