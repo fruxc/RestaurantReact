@@ -1,1 +1,1 @@
-## This is created for front end development with react course from coursera 
+## React Restaurant
