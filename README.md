@@ -5,6 +5,14 @@
 
 ### Note: Code is also available to use it with JSON Server kindly try if you want to explore.
 
+### Run server first 
+
+```bash
+json-server --watch db.json
+```
+
+### Run react app
+
 ```bash
 npm install
 npm start
